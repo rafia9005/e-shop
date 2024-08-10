@@ -6,3 +6,29 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  token     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contact Contact[]
+
+  @@map("users")
+}
+
+model Contact {
+  id         Int     @id @default(autoincrement())
+  frist_name String?
+  last_name  String?
+  phone      String?
+  email      String?
+
+  user User? @relation(fields: [email], references: [email])
+
+  @@map("contacts")
+}
