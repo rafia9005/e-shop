@@ -28,7 +28,21 @@ model Contact {
   phone      String?
   email      String?
 
-  user User? @relation(fields: [email], references: [email])
+  user    User?    @relation(fields: [email], references: [email])
+  address Address?
 
   @@map("contacts")
+}
+
+model Address {
+  id         Int     @id @default(autoincrement())
+  street     String?
+  city       String?
+  province   String?
+  country    String?
+  contact_id Int     @unique
+
+  contact Contact @relation(fields: [contact_id], references: [id])
+
+  @@map("addresses")
 }
